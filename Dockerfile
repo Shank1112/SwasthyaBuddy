@@ -1,12 +1,11 @@
-FROM maven:3.9.6-eclipse-temurin-21-jammy AS build
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:21-jre-jammy
-RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
-WORKDIR /app
-COPY --from=build /app/target/*.war app.war
+FROM tomcat:10.1-jdk21-temurin
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 EXPOSE 8080
-CMD ["java", "-jar", "app.war"]
+CMD ["catalina.sh", "run"]
