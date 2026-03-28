@@ -18,8 +18,6 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/AuthServlet")
 public class AuthServlet extends HttpServlet {
 
-    // ── LOGIN (POST action=login)
-    // ── SIGNUP (POST action=signup)
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -35,7 +33,6 @@ public class AuthServlet extends HttpServlet {
         }
     }
 
-    // ── LOGOUT (GET action=logout)
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
@@ -48,9 +45,6 @@ public class AuthServlet extends HttpServlet {
         }
     }
 
-    // ════════════════════════════════════
-    //  LOGIN
-    // ════════════════════════════════════
     private void handleLogin(HttpServletRequest req, HttpServletResponse res)
             throws IOException, ServletException {
 
@@ -77,7 +71,6 @@ public class AuthServlet extends HttpServlet {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                // Build user object
                 User user = new User();
                 user.setId(rs.getInt("id"));
                 user.setFirstName(rs.getString("first_name"));
@@ -86,16 +79,14 @@ public class AuthServlet extends HttpServlet {
                 user.setRole(rs.getString("role"));
                 user.setPhone(rs.getString("phone"));
 
-                // Store in session
                 HttpSession session = req.getSession(true);
-                session.setAttribute("user",     user);
-                session.setAttribute("userId",   user.getId());
-                session.setAttribute("userName", user.getFirstName());
-                session.setAttribute("userRole", user.getRole());
-                session.setAttribute("userEmail",user.getEmail());
-                session.setMaxInactiveInterval(30 * 60); // 30 min
+                session.setAttribute("user",      user);
+                session.setAttribute("userId",    user.getId());
+                session.setAttribute("userName",  user.getFirstName());
+                session.setAttribute("userRole",  user.getRole());
+                session.setAttribute("userEmail", user.getEmail());
+                session.setMaxInactiveInterval(30 * 60);
 
-                // Role-based redirect
                 if ("DOCTOR".equalsIgnoreCase(user.getRole())) {
                     res.sendRedirect("doctor-dashboard.jsp");
                 } else {
@@ -116,22 +107,18 @@ public class AuthServlet extends HttpServlet {
         }
     }
 
-    // ════════════════════════════════════
-    //  SIGNUP
-    // ════════════════════════════════════
     private void handleSignup(HttpServletRequest req, HttpServletResponse res)
             throws IOException, ServletException {
 
-        String firstName   = req.getParameter("firstName");
-        String lastName    = req.getParameter("lastName");
-        String email       = req.getParameter("email");
-        String password    = req.getParameter("password");
-        String role        = req.getParameter("role");
-        String phone       = req.getParameter("phone");
-        String gender      = req.getParameter("gender");
-        String bloodGroup  = req.getParameter("bloodGroup");
+        String firstName  = req.getParameter("firstName");
+        String lastName   = req.getParameter("lastName");
+        String email      = req.getParameter("email");
+        String password   = req.getParameter("password");
+        String role       = req.getParameter("role");
+        String phone      = req.getParameter("phone");
+        String gender     = req.getParameter("gender");
+        String bloodGroup = req.getParameter("bloodGroup");
 
-        // Basic validation
         if (firstName == null || email == null || password == null
                 || firstName.trim().isEmpty() || email.trim().isEmpty()
                 || password.trim().isEmpty()) {
@@ -144,7 +131,6 @@ public class AuthServlet extends HttpServlet {
         try {
             con = DBUtil.getConnection();
 
-            // Check email already exists
             PreparedStatement check = con.prepareStatement(
                 "SELECT id FROM swasthya_users WHERE LOWER(email) = LOWER(?)");
             check.setString(1, email.trim());
@@ -156,24 +142,22 @@ public class AuthServlet extends HttpServlet {
                 return;
             }
 
-            // Insert new user
             String sql = "INSERT INTO swasthya_users " +
-                         "(id, first_name, last_name, email, password, " +
-                         "role, phone, gender, blood_group, created_at) " +
-                         "VALUES (users_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)";
+                         "(first_name, last_name, email, password, " +
+                         "role, phone, gender, blood_group) " +
+                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, firstName.trim());
-            ps.setString(2, lastName  != null ? lastName.trim()   : "");
+            ps.setString(2, lastName   != null ? lastName.trim()    : "");
             ps.setString(3, email.trim());
             ps.setString(4, password.trim());
-            ps.setString(5, role      != null ? role.toUpperCase(): "PATIENT");
-            ps.setString(6, phone     != null ? phone.trim()      : "");
-            ps.setString(7, gender    != null ? gender.trim()     : "");
-            ps.setString(8, bloodGroup!= null ? bloodGroup.trim() : "");
+            ps.setString(5, role       != null ? role.toUpperCase() : "PATIENT");
+            ps.setString(6, phone      != null ? phone.trim()       : "");
+            ps.setString(7, gender     != null ? gender.trim()      : "");
+            ps.setString(8, bloodGroup != null ? bloodGroup.trim()  : "");
             ps.executeUpdate();
 
-            // Redirect to login with success message
             req.setAttribute("success", "Account created successfully! Please login.");
             req.getRequestDispatcher("login.jsp").forward(req, res);
 
