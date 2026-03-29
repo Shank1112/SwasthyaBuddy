@@ -18,7 +18,6 @@
     body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--white);height:100vh;display:flex;overflow:hidden;}
     body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.025) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
 
-    /* SIDEBAR */
     .sidebar{width:256px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;z-index:100;}
     .sb-header{padding:22px 18px 18px;border-bottom:1px solid var(--border);}
     .sb-brand{display:flex;align-items:center;gap:11px;}
@@ -40,7 +39,6 @@
     .uc-out{margin-left:auto;color:var(--muted);text-decoration:none;font-size:15px;}
     .uc-out:hover{color:var(--rose);}
 
-    /* MAIN */
     .main{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative;z-index:1;}
     .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--border);background:rgba(6,11,24,0.85);backdrop-filter:blur(20px);flex-shrink:0;}
     .tb-left .tb-title{font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;}
@@ -49,13 +47,11 @@
     .ai-dot{width:6px;height:6px;border-radius:50%;background:var(--emerald);animation:pulse 2s infinite;}
     @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
 
-    /* CHAT LAYOUT */
     .chat-area{flex:1;display:flex;overflow:hidden;}
     .chat-col{flex:1;display:flex;flex-direction:column;overflow:hidden;}
     .messages{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px;}
     .messages::-webkit-scrollbar{width:3px;}
     .messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
-
     .msg{display:flex;gap:10px;max-width:78%;animation:msgIn 0.35s cubic-bezier(0.16,1,0.3,1);}
     @keyframes msgIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
     .msg.bot{align-self:flex-start;}
@@ -67,18 +63,15 @@
     .bot .bubble{background:var(--surface);border:1px solid var(--border2);border-top-left-radius:4px;}
     .user .bubble{background:linear-gradient(135deg,rgba(59,130,246,0.2),rgba(59,130,246,0.1));border:1px solid rgba(59,130,246,0.25);border-top-right-radius:4px;}
     .msg-time{font-size:0.62rem;color:var(--muted);margin-top:5px;}
-    .bot .msg-time{text-align:left;} .user .msg-time{text-align:right;}
-
+    .bot .msg-time{text-align:left;}.user .msg-time{text-align:right;}
     .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;}
     .chip{padding:6px 14px;border:1px solid rgba(59,130,246,0.3);border-radius:20px;font-size:0.76rem;color:var(--accent);cursor:pointer;transition:all 0.2s;background:rgba(59,130,246,0.06);}
     .chip:hover{background:rgba(59,130,246,0.15);border-color:var(--accent);color:var(--white);transform:translateY(-1px);}
-
     .typing{display:flex;align-items:center;gap:4px;padding:10px 14px;background:var(--surface);border:1px solid var(--border2);border-radius:16px;border-top-left-radius:4px;width:fit-content;}
     .td{width:7px;height:7px;border-radius:50%;background:var(--muted2);animation:bounce 1.2s infinite;}
     .td:nth-child(2){animation-delay:0.2s;}.td:nth-child(3){animation-delay:0.4s;}
     @keyframes bounce{0%,100%{transform:translateY(0);opacity:0.4}50%{transform:translateY(-5px);opacity:1}}
 
-    /* INPUT BAR */
     .input-bar{padding:14px 20px;background:rgba(6,11,24,0.9);border-top:1px solid var(--border);flex-shrink:0;}
     .tags-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;min-height:0;}
     .sym-tag{display:flex;align-items:center;gap:5px;padding:4px 10px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:20px;font-size:0.74rem;color:var(--emerald);animation:tagPop 0.2s ease;}
@@ -97,7 +90,6 @@
     .inp-hint{font-size:0.66rem;color:var(--muted);margin-top:8px;text-align:center;}
     kbd{background:rgba(255,255,255,0.06);border:1px solid var(--border);padding:1px 5px;border-radius:4px;font-size:0.62rem;}
 
-    /* RIGHT PANEL */
     .side-panel{width:264px;flex-shrink:0;padding:20px;overflow-y:auto;border-left:1px solid var(--border);display:flex;flex-direction:column;gap:14px;}
     .sp-title{font-size:0.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.14em;}
     .stat-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;}
@@ -113,12 +105,37 @@
     .btn-clear{padding:9px 14px;background:rgba(244,63,94,0.06);border:1px solid rgba(244,63,94,0.2);border-radius:10px;color:var(--rose);font-size:0.76rem;cursor:pointer;transition:all 0.2s;width:100%;text-align:center;}
     .btn-clear:hover{background:rgba(244,63,94,0.12);}
 
-    @media(max-width:900px){.sidebar,.side-panel{display:none;}}
+    /* MOBILE NAV */
+    .mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:6px 8px;justify-content:space-around;align-items:center;z-index:200;}
+    .mob-nav a{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted2);text-decoration:none;font-size:0.58rem;padding:6px 8px;border-radius:10px;min-width:48px;}
+    .mob-nav a.active{color:var(--accent);background:rgba(59,130,246,0.1);}
+    .mob-nav a span{font-size:18px;}
+    .mob-nav .more-btn{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted2);font-size:0.58rem;padding:6px 8px;border-radius:10px;background:none;border:none;cursor:pointer;min-width:48px;}
+    .mob-nav .more-btn span{font-size:18px;}
+
+    /* MOBILE SHEET */
+    .mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:300;backdrop-filter:blur(4px);}
+    .mob-overlay.open{display:block;}
+    .mob-sheet{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-radius:20px 20px 0 0;padding:16px;z-index:301;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);}
+    .mob-overlay.open + .mob-sheet,.mob-sheet.open{transform:translateY(0);}
+    .sheet-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
+    .sheet-title{font-family:'Outfit',sans-serif;font-size:0.9rem;font-weight:700;color:var(--muted2);margin-bottom:12px;padding:0 4px;}
+    .sheet-link{display:flex;align-items:center;gap:14px;padding:14px 12px;color:var(--white);text-decoration:none;font-size:0.88rem;border-radius:12px;transition:all 0.2s;}
+    .sheet-link:hover{background:rgba(255,255,255,0.05);}
+    .sheet-link .si{font-size:20px;width:24px;text-align:center;}
+    .sheet-link.danger{color:var(--rose);}
+
+    @media(max-width:900px){
+      .sidebar,.side-panel{display:none;}
+      .mob-nav{display:flex;}
+      .main{padding-bottom:68px;}
+      .messages{padding:16px;}
+      .input-bar{padding:10px 14px;}
+    }
   </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sb-header">
     <div class="sb-brand">
@@ -134,6 +151,7 @@
   <div class="sb-sec">Account</div>
   <a href="HistoryServlet" class="nl"><span class="ni">🕐</span>History</a>
   <a href="profile.jsp" class="nl"><span class="ni">👤</span>My Profile</a>
+  <a href="about.jsp" class="nl"><span class="ni">ℹ️</span>About</a>
   <div class="sb-footer">
     <div class="uc">
       <div class="uc-av"><%= userName.charAt(0) %></div>
@@ -213,13 +231,32 @@
   </div>
 </div>
 
+<!-- Mobile Bottom Nav -->
+<nav class="mob-nav">
+  <a href="patient-dashboard.jsp" class="active"><span>💬</span>Symptoms</a>
+  <a href="result.jsp"><span>📊</span>Results</a>
+  <a href="maps.jsp"><span>🗺️</span>Clinics</a>
+  <a href="medicines.jsp"><span>💊</span>Medicines</a>
+  <button class="more-btn" onclick="openSheet()"><span>⋯</span>More</button>
+</nav>
+
+<!-- Mobile Sheet Overlay -->
+<div class="mob-overlay" id="overlay" onclick="closeSheet()"></div>
+<div class="mob-sheet" id="mobSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title">More Options</div>
+  <a href="HistoryServlet" class="sheet-link"><span class="si">🕐</span>History</a>
+  <a href="profile.jsp" class="sheet-link"><span class="si">👤</span>My Profile</a>
+  <a href="about.jsp" class="sheet-link"><span class="si">ℹ️</span>About SwasthyaBuddy</a>
+  <a href="AuthServlet?action=logout" class="sheet-link danger"><span class="si">⏻</span>Logout</a>
+</div>
+
 <form id="pf" action="PredictionServlet" method="post" style="display:none;"><input type="hidden" name="symptoms" id="sh"/></form>
 
 <script>
 let symptoms=[];
 const botLines=["Got it — noted <strong>{s}</strong>. Anything else?","Noted: <strong>{s}</strong>. Keep going!","Added <strong>{s}</strong>. Any other symptoms?","I see you're experiencing <strong>{s}</strong>. More?","Understood — <strong>{s}</strong>. Add more or click Analyse."];
 let bi=0;
-
 function now(){return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
 function chipAdd(s){addSym(s);addUserMsg(s);botReply(s);}
 function addFromInp(){const el=document.getElementById('si');const v=el.value.trim();if(!v)return;addSym(v);addUserMsg(v);botReply(v);el.value='';el.style.height='auto';}
@@ -236,6 +273,8 @@ function clearAll(){symptoms=[];renderTags();renderPanel();document.getElementBy
 function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();addFromInp();}}
 function resize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
 function scrollDown(){const m=document.getElementById('messages');m.scrollTop=m.scrollHeight;}
+function openSheet(){document.getElementById('overlay').classList.add('open');document.getElementById('mobSheet').classList.add('open');}
+function closeSheet(){document.getElementById('overlay').classList.remove('open');document.getElementById('mobSheet').classList.remove('open');}
 </script>
 </body>
 </html>
