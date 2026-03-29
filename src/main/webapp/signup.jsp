@@ -107,7 +107,7 @@
       </div>
     </div>
 
-    <form action="SignupServlet" method="post" id="form">
+    <form action="AuthServlet" method="post" id="form">
       <input type="hidden" name="role" id="roleInput" value="PATIENT"/>
 
       <div class="sec-label">Personal Information</div>
