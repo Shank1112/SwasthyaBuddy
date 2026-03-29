@@ -109,7 +109,7 @@
 
     <form action="AuthServlet" method="post" id="form">
       <input type="hidden" name="role" id="roleInput" value="PATIENT"/>
-
+	<input type="hidden" name="action" value="signup"/>
       <div class="sec-label">Personal Information</div>
       <div class="row2">
         <div class="fl"><label>First Name</label><input type="text" class="inp" name="firstName" placeholder="Rahul" required/></div>
